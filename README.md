@@ -4,17 +4,17 @@
 Wednesday January 12th 2022
 
 ### Project Title
-Bikeshare project for Udacity ND 1
+Bikeshare project for Udacity NanoDegree 1
 
 ### Description
 This project contains a Python script enabling the user to explore bike rentals data in 3 US cities.
 
 ### Files used
 3 csv files are used :
-  chicago.csv
-  new_york_city.csv
-  washington.csv
+  chicago.csv  
+  new_york_city.csv  
+  washington.csv  
 
 ### Credits
-This project was made possible thanks to the Udacity plateform in the NanoDegree "Programming for Data Science with Python"
+This project was made possible thanks to the Udacity plateform in the NanoDegree "Programming for Data Science with Python"  
 The original repository for this project was https://github.com/udacity/pdsnd_github
