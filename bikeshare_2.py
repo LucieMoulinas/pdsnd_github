@@ -26,21 +26,21 @@ def get_filters():
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = input('Which city do you want to explore ? Choose between Chicago, New York and Washington : ').lower()
     while city not in ['chicago','new york','washington'] :
-        print ("\n Oups, you must select a city among the 3 options available !")
-        city = input('Which city do you want to explore ? Choose between Chicago, New York and Washington : ').lower()
+        print ("\n Oups, you must select a city among the 3 options available, and spell it correctly !")
+        city = input('\n Which city do you want to explore ? Choose between Chicago, New York and Washington : ').lower()
 
     # get user input for month (all, january, february, ... , june)
     month = input("Which month do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
     while month not in ['january','february','march','april','may','june','all'] :
         print("\n Oups, you must select a month between January and June and spell it properly, or type all. Let's try again")
-        month = input("Which month do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
-        
+        month = input("\n Which month do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
+
     # get user input for day of week (all, monday, tuesday, ... sunday)
-    day = input("Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
+    day = input("\n Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
     while day not in ['monday','tuesday','wednesday','thursday','friday','saturday','sunday','all'] :
         print("\n Oups, you must select a day and spell it properly, or type all. Let's try again")
-        day = input("Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
-        
+        day = input("\n Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
+
     print('\n Thank you for selecting the data. We have 3 filters now : city - {} , month - {} , day - {} ' . format(city,month,day))
     print('-'*40)
     return city, month, day
@@ -63,15 +63,15 @@ def load_data(city, month, day):
     df['Day nb'] = df['Start Time'].dt.dayofweek
     df['Month nb'] = df['Start Time'].dt.month
     df['Start hour']=df['Start Time'].dt.hour
-    
+
     if day !='all' :
         day_to_keep = days.index(day)
         df = df.loc[df['Day nb'] == day_to_keep]
-        
+
     if month != 'all' :
         month_to_keep = months.index(month)+1
         df = df.loc[df['Month nb'] == month_to_keep]
-        
+
     return df
 
 
@@ -82,7 +82,7 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # display the most common month 
+    # display the most common month
     most_common_month_nb = df['Month nb'].mode()[0]
     most_common_month_name = months[most_common_month_nb - 1]
     print('\n The most common month is {}'.format(most_common_month_name))
@@ -115,7 +115,7 @@ def station_stats(df):
     # display most frequent combination of start station and end station trip
     df['Station pair'] = df['Start Station'] + ' - ' +  df['End Station']
     most_common_trip = df['Station pair'].mode()[0]
-    print('\n The most common pair of start and end station is {}'.format(most_common_trip))   
+    print('\n The most common pair of start and end station is {}'.format(most_common_trip))
     df.drop(columns=['Station pair'] , inplace = True)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -154,7 +154,7 @@ def user_stats(df):
     user_count_dic = user_count_serie.to_dict()
     for pair in list(user_count_dic.items()) :
         print('There are {} users of type {} \n'.format(pair[1],pair[0]))
-    
+
     # Display counts of gender
     if 'Gender' in df.columns :
         gender_count_serie = df.groupby(['Gender'])['Start Time'].count()
@@ -184,25 +184,25 @@ def main():
         print('\n The dimensions of the selected dataset are {}'.format(df.shape))
         print('-'*40)
         time_stats(df)
-        wait = input('Press enter to continue to the next section \n')
+        wait = input('\n Press enter to continue to the next section \n')
         print('-'*40)
         station_stats(df)
-        wait = input('Press enter to continue to the next section \n')
+        wait = input('\n Press enter to continue to the next section \n')
         print('-'*40)
         trip_duration_stats(df)
-        wait = input('Press enter to continue to the next section \n')
+        wait = input('\n Press enter to continue to the next section \n')
         print('-'*40)
         user_stats(df)
-        
-        raw = input('Would you like to look at the first 5 rows of the data ? Enter yes or no\n')
+
+        raw = input('\n Would you like to look at the first 5 rows of the data ? Enter yes or no\n')
         i=0
         while raw.lower() =='yes' and i<df.shape[0]-5:
             print(df[i:i+5])
             i+=5
-            raw = input('Would you like to look at the next 5 rows of the data ? Enter yes or no \n')
+            raw = input('\n Would you like to look at the next 5 rows of the data ? Enter yes or no \n')
 
-        
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
+
+        restart = input('\n Would you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
 
