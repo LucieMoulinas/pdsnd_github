@@ -1,5 +1,6 @@
 import time
 import pandas as pd
+pd.set_option('display.max_columns',200)
 import numpy as np
 import datetime as dt
 
