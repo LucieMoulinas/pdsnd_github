@@ -17,6 +17,7 @@ months =['january','february','march','april','may','june','july','august','sept
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
+    The month has to be between January and June
 
     Returns:
         (str) city - name of the city to analyze
@@ -77,8 +78,13 @@ def load_data(city, month, day):
 
 
 def time_stats(df):
-    """Displays statistics on the most frequent times of travel.
-    the input datafram should include colums containing the day nb, month nb and start hour"""
+    """
+    Displays statistics on the most frequent times of travel.
+    The input datafram should include colums containing the day nb, month nb and start hour
+
+    Args :
+        (DataFrame) df - DataFrame containing the data to calculate the statistics on
+    """
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
@@ -101,7 +107,10 @@ def time_stats(df):
 
 
 def station_stats(df):
-    """Displays statistics on the most popular stations and trip."""
+    """
+    Displays statistics on the most popular stations and trip
+    """
+
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
@@ -124,7 +133,9 @@ def station_stats(df):
 
 
 def trip_duration_stats(df):
-    """Displays statistics on the total and average trip duration."""
+    """
+    Displays statistics on the total and average trip duration
+    """
 
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
@@ -145,7 +156,9 @@ def trip_duration_stats(df):
 
 
 def user_stats(df):
-    """Displays statistics on bikeshare users."""
+    """
+    Displays statistics on bikeshare users
+    """
 
     print('\nCalculating User Stats...\n')
     start_time = time.time()
@@ -194,15 +207,12 @@ def main():
         wait = input('\n Press enter to continue to the next section \n')
         print('-'*40)
         user_stats(df)
-
         raw = input('\n Would you like to look at the first 5 rows of the data ? Enter yes or no\n')
         i=0
         while raw.lower() =='yes' and i<df.shape[0]-5:
             print(df[i:i+5])
             i+=5
             raw = input('\n Would you like to look at the next 5 rows of the data ? Enter yes or no \n')
-
-
         restart = input('\n Would you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
