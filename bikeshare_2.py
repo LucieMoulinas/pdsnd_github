@@ -16,6 +16,7 @@ months =['january','february','march','april','may','june','july','august','sept
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
+    The month has to be between January and June
 
     Returns:
         (str) city - name of the city to analyze
@@ -34,13 +35,13 @@ def get_filters():
     while month not in ['january','february','march','april','may','june','all'] :
         print("\n Oups, you must select a month between January and June and spell it properly, or type all. Let's try again")
         month = input("Which month do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
-        
+
     # get user input for day of week (all, monday, tuesday, ... sunday)
     day = input("Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
     while day not in ['monday','tuesday','wednesday','thursday','friday','saturday','sunday','all'] :
         print("\n Oups, you must select a day and spell it properly, or type all. Let's try again")
         day = input("Which day do you want to analyze ? Type the full name, or type all to keep all the data : ").lower()
-        
+
     print('\n Thank you for selecting the data. We have 3 filters now : city - {} , month - {} , day - {} ' . format(city,month,day))
     print('-'*40)
     return city, month, day
@@ -63,26 +64,31 @@ def load_data(city, month, day):
     df['Day nb'] = df['Start Time'].dt.dayofweek
     df['Month nb'] = df['Start Time'].dt.month
     df['Start hour']=df['Start Time'].dt.hour
-    
+
     if day !='all' :
         day_to_keep = days.index(day)
         df = df.loc[df['Day nb'] == day_to_keep]
-        
+
     if month != 'all' :
         month_to_keep = months.index(month)+1
         df = df.loc[df['Month nb'] == month_to_keep]
-        
+
     return df
 
 
 def time_stats(df):
-    """Displays statistics on the most frequent times of travel.
-    the input datafram should include colums containing the day nb, month nb and start hour"""
+    """
+    Displays statistics on the most frequent times of travel.
+    The input datafram should include colums containing the day nb, month nb and start hour
+
+    Args :
+        (DataFrame) df - DataFrame containing the data to calculate the statistics on
+    """
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # display the most common month 
+    # display the most common month
     most_common_month_nb = df['Month nb'].mode()[0]
     most_common_month_name = months[most_common_month_nb - 1]
     print('\n The most common month is {}'.format(most_common_month_name))
@@ -100,7 +106,10 @@ def time_stats(df):
 
 
 def station_stats(df):
-    """Displays statistics on the most popular stations and trip."""
+    """
+    Displays statistics on the most popular stations and trip
+    """
+
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
@@ -115,7 +124,7 @@ def station_stats(df):
     # display most frequent combination of start station and end station trip
     df['Station pair'] = df['Start Station'] + ' - ' +  df['End Station']
     most_common_trip = df['Station pair'].mode()[0]
-    print('\n The most common pair of start and end station is {}'.format(most_common_trip))   
+    print('\n The most common pair of start and end station is {}'.format(most_common_trip))
     df.drop(columns=['Station pair'] , inplace = True)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -123,7 +132,9 @@ def station_stats(df):
 
 
 def trip_duration_stats(df):
-    """Displays statistics on the total and average trip duration."""
+    """
+    Displays statistics on the total and average trip duration
+    """
 
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
@@ -144,7 +155,9 @@ def trip_duration_stats(df):
 
 
 def user_stats(df):
-    """Displays statistics on bikeshare users."""
+    """
+    Displays statistics on bikeshare users
+    """
 
     print('\nCalculating User Stats...\n')
     start_time = time.time()
@@ -154,7 +167,7 @@ def user_stats(df):
     user_count_dic = user_count_serie.to_dict()
     for pair in list(user_count_dic.items()) :
         print('There are {} users of type {} \n'.format(pair[1],pair[0]))
-    
+
     # Display counts of gender
     if 'Gender' in df.columns :
         gender_count_serie = df.groupby(['Gender'])['Start Time'].count()
@@ -193,7 +206,7 @@ def main():
         wait = input('Press enter to continue to the next section \n')
         print('-'*40)
         user_stats(df)
-        
+
         raw = input('Would you like to look at the first 5 rows of the data ? Enter yes or no\n')
         i=0
         while raw.lower() =='yes' and i<df.shape[0]-5:
@@ -201,7 +214,7 @@ def main():
             i+=5
             raw = input('Would you like to look at the next 5 rows of the data ? Enter yes or no \n')
 
-        
+
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
