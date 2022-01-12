@@ -129,14 +129,14 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # display total travel time
-    total_travel_seconds = int(df['Trip Duration'].sum())
-    total_travel_time = str(dt.timedelta(seconds=total_travel_seconds))
-    print('The total travel time was {}'.format(total_travel_time))
+    tts = int(df['Trip Duration'].sum()) # tts = total_travel_seconds
+    ttt = str(dt.timedelta(seconds=tts)) # ttt = total_travel_time
+    print('The total travel time was {}'.format(ttt))
 
     # display mean travel time
-    mean_travel_seconds = int(df['Trip Duration'].mean())
-    mean_travel_time = str(dt.timedelta(seconds=mean_travel_seconds))
-    print('The mean travel time was {} seconds, which can also be read {}'.format(str(mean_travel_seconds) , mean_travel_time))
+    mts = int(df['Trip Duration'].mean()) # mts = mean_travel_seconds
+    mtt = str(dt.timedelta(seconds=mts)) # mtt = mean_travel_time
+    print('The mean travel time was {} seconds, which can also be read {}'.format(str(mts) , mtt))
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
